@@ -4,10 +4,14 @@ image:
 
 # Tasks to run when workspace starts
 tasks:
-  - name: Install dependencies
-    init: npm install
-  - name: Run Vite dev server
-    command: npm run dev
+  - name: Install & Start Vue
+    init: |
+      cd frontend
+      npm install
+    command: |
+      cd frontend
+      npm run dev
+
 
 # Ports to expose
 ports:

@@ -1,11 +1,8 @@
-# Base image
-FROM node:20-bullseye
+# Base Gitpod workspace image
+FROM gitpod/workspace-full:latest
 
-# Set working directory inside frontend
+# Set working directory
 WORKDIR /workspace/frontend
-
-# Install global dependencies
-RUN npm install -g pnpm
 
 # Copy package files first for caching
 COPY frontend/package.json frontend/package-lock.json* ./
@@ -13,11 +10,11 @@ COPY frontend/package.json frontend/package-lock.json* ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the frontend source
+# Copy all project files
 COPY frontend/ .
 
 # Expose Vite dev server port
 EXPOSE 5173
 
-# Default command
+# Start development server
 CMD ["npm", "run", "dev"]
