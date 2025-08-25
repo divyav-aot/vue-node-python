@@ -1,0 +1,23 @@
+# Use a custom Docker image
+image:
+  file: .gitpod.Dockerfile
+
+# Tasks to run when workspace starts
+tasks:
+  - name: Install dependencies
+    init: npm install
+  - name: Run Vite dev server
+    command: npm run dev
+
+# Ports to expose
+ports:
+  - port: 5173
+    onOpen: open-preview
+
+# VS Code extensions for Vue 3 + Vite
+vscode:
+  extensions:
+    - octref.vetur        # Vue tooling
+    - Vue.volar           # Vue 3 IntelliSense
+    - esbenp.prettier-vscode
+    - dbaeumer.vscode-eslint
