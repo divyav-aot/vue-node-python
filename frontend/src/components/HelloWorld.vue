@@ -4,9 +4,14 @@ import { ref } from 'vue';
 const props = defineProps<{ msg?: string }>();
 const msg = props.msg ?? 'Welcome to Vue 3 + TypeScript!';
 const count = ref(0);
+const a =ref(0);
 </script>
 
 <template>
+
+
+
+
   <h1>{{ msg }}</h1>
 
   <div class="card">
