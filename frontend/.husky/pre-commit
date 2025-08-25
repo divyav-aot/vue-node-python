@@ -1,0 +1,4 @@
+cd frontend 
+
+# Run lint
+npm run lint
