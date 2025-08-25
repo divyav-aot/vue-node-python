@@ -71,6 +71,26 @@ cd frontend && npm run lint:fix
 
 ⚡ Husky + lint-staged will auto-run these checks on staged files during commits.
 
+## Setting Up Husky and Linting
+
+For the first time after cloning the project, run the following command to set up Husky:
+
+```bash
+npm run prepare
+```
+This will configure Git hooks for pre-commit checks.
+
+---
+
+To automatically fix linting issues in the code, run:
+
+```bash
+npm run lint:fix
+
+```
+
+This will apply ESLint and Prettier fixes where possible.
+
 ---
 
 ## Code Quality

@@ -25,17 +25,16 @@ export default [
       prettier
     },
     rules: {
-      // Vue rules
-      'vue/multi-word-component-names': 'warn',
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
 
       // General rules
-      'no-console': 'warn',
-      'no-debugger': 'warn',
+      'no-console': 'error',
+      'no-debugger': 'error',
       // Prettier integration
-      'prettier/prettier': 'warn', 
+      'prettier/prettier': 'error', 
 
     },
   },

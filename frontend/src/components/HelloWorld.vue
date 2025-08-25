@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { highlightResult } from 'vuetify/lib/composables/filter.mjs';
 
 const props = defineProps<{ msg?: string }>();
 const msg = props.msg ?? 'Welcome to Vue 3 + TypeScript!';
 const count = ref(0);
-const a = ref(0); highlightResult
-
-
 </script>
 
 <template>
-
-
-
-
   <h1>{{ msg }}</h1>
 
   <div class="card">
