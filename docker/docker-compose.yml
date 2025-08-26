@@ -1,7 +1,7 @@
 services:
   frontend:
     build:
-      context: ../../frontend
+      context: ../frontend
       dockerfile: Dockerfile
       args:
         - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:3000}
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
   backend:
     build:
-      context: ../../backend
+      context: ../backend
       dockerfile: Dockerfile
     container_name: app-backend
     env_file:
