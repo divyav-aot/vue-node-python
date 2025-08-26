@@ -5,29 +5,29 @@ tasks:
     before: |
       echo 'Bringing down any previously running containers'
     init: |
-      cd deployment/local
+      cd docker
       docker-compose down -v
   - name: postgres
     init: |
-      cd deployment/local
+      cd docker
       echo 'Starting postgres container'
       docker-compose up -d postgres
       echo 'Started postgres'
   - name: backend
     init: |
-      cd deployment/local
+      cd docker
       echo 'Building backend container'
       docker-compose build backend
       echo 'Built backend'
     command: |
       gp await-port 7432
-      cd deployment/local
+      cd docker
       echo 'Starting backend container'
       docker-compose up -d backend
       echo 'Started backend'
   - name: frontend
     init: |
-      cd deployment/local
+      cd docker
       echo 'Copying .env-gitpod to .env'
       cp .env-gitpod .env
       eval $(gp env -e)
@@ -39,7 +39,7 @@ tasks:
       gp await-port 8300
       eval $(gp env -e)
       export VITE_API_BASE_URL=$(gp url 8300)
-      cd deployment/local
+      cd docker
       echo 'Starting frontend container'
       docker-compose up -d frontend
       echo 'Started frontend'
@@ -53,7 +53,7 @@ ports:
   - name: Backend
     description: Port 8300 for the backend
     port: 8300
-    onOpen: ignore
+    onOpen: notify
     visibility: public
   - name: postgres
     description: Port 7432 for the postgres
