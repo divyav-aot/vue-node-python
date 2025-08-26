@@ -1,33 +1,15 @@
+version: '3.8'
+
 services:
-  frontend:
-    build:
-      context: ../../frontend
-      dockerfile: Dockerfile
-      args:
-        - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:3000}
-    container_name: app-frontend
-    # depends_on:
-    #   - backend
-    env_file:
-      - ./.env
-    environment:
-      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-http://localhost:3000}
+  api:
+    build: .
+    container_name: fastapi-app
     ports:
-      - "${FRONTEND_HTTP_PORT:-8080}:80"
-    restart: unless-stopped
-  backend:
-    build:
-      context: ../../backend
-      dockerfile: Dockerfile
-    container_name: app-backend
-    env_file:
-      - ./.env
+      - "8300:8000"
     environment:
       - PORT=8000
       - PYTHONPATH=/app
-      - DATABASE_URL=${DATABASE_URL:-postgresql://fastapi_user:fastapi_password@postgres:5432/fastapi_db}
-    ports:
-      - "8300:8000"
+      - DATABASE_URL=postgresql://fastapi_user:fastapi_password@postgres:5432/fastapi_db
     volumes:
       - .:/app
       - /app/__pycache__
@@ -41,7 +23,9 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-  
+    networks:
+      - fastapi-network
+
   postgres:
     image: postgres:15-alpine
     container_name: fastapi-postgres
@@ -52,8 +36,8 @@ services:
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
       - "7432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U fastapi_user -d fastapi_db"]
@@ -61,7 +45,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    networks:
+      - fastapi-network
 
 networks:
-  default:
-    name: app-network
+  fastapi-network:
+    driver: bridge
+
+volumes:
+  postgres_data: 
