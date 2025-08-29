@@ -31,26 +31,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
-import { useStore } from "vuex";
-import { RootState } from "@/store/types";
-import { ActionTypes } from "@/store/modules/states/actions";
-import { GetterTypes } from "@/store/modules/states/getters";
+import { defineComponent, onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
+import type { RootState } from '@/store/types';
+import { ActionTypes } from '@/store/modules/states/actions';
+//
 
 export default defineComponent({
-  name: "StateDashboard",
+  name: 'StateDashboard',
   setup() {
     const store = useStore<RootState>();
 
     // Fetch states on mount
     onMounted(() => {
-      store.dispatch(ActionTypes.FETCH_STATES);
+      store.dispatch(`states/${ActionTypes.FETCH_STATES}`);
     });
 
     // Map state from getters
-    const states = store.getters[`states/${GetterTypes.GET_STATES}`];
-    const loading = store.getters[`states/${GetterTypes.GET_LOADING}`];
-    const error = store.getters[`states/${GetterTypes.GET_ERROR}`];
+    const states = computed(() => store.getters['states/allStates']);
+    const loading = computed(() => store.getters['states/isLoading']);
+    const error = computed(() => store.getters['states/errorMessage']);
 
     return {
       states,
